@@ -36,24 +36,27 @@ const runWithRetry = async (model, input) => {
 };
 
 const clean = (text) => {
-  text = text.replace(/\s+$/g, "").replace(/\n{2,}/g, "\n\n");
+  text = text
+    .replace(/\s+$/g, "")
+    .replace(/\n{2,}/g, "\n\n")
+    .replace(/{{Image\|(?:[^\}]+\/)*([^\}]+)\|[0-9]+px(?:\|link=.+)?}}/g, `"$1"`);
   text = text.slice(0, 1500);
   const fractionSpecial = [...text].filter((c) => /[^a-zA-Z \n]/.test(c)).length / text.length;
   if (fractionSpecial > 0.1) {
-    text = text.slice(0, 1300);
+    text = text.slice(0, 1500 - Math.min(1000, (fractionSpecial / 0.1) * 250));
   }
   return text;
 };
 
-const docsFiles = await fs.readdir("docs");
-const docsEntries = await Promise.all(
-  docsFiles.map(async (page) => [page, await fs.readFile("docs/" + page, "utf8")])
+const pagesFiles = await fs.readdir("pages");
+const pagesEntries = await Promise.all(
+  pagesFiles.map(async (page) => [page, await fs.readFile("pages/" + page, "utf8")])
 );
 const output = {};
 
 const worker = async () => {
-  while (docsEntries.length) {
-    const chunk = docsEntries.splice(0, 25);
+  while (pagesEntries.length) {
+    const chunk = pagesEntries.splice(0, 25);
     console.log("chunk of", chunk[0][0]);
     let data = [];
 
@@ -87,4 +90,4 @@ const worker = async () => {
   }
 };
 
-await Promise.all([worker(), worker(), worker(), worker(), worker(), worker()]);
+await Promise.all([worker(), worker(), worker(), worker(), worker(), worker(), worker()]);

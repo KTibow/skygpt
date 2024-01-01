@@ -28,13 +28,14 @@ const patchedFetch = async (url, options = {}) => {
 };
 
 // Function to fetch page content using the MediaWiki API
-async function getPageContent(pageTitle) {
+async function getPageContent(pages) {
   const params = new URLSearchParams({
-    action: "parse",
-    page: pageTitle,
+    action: "query",
+    titles: pages,
     format: "json",
     formatversion: 2,
-    prop: "wikitext|text",
+    prop: "revisions",
+    rvprop: "content",
   });
   const response = await patchedFetch(`${apiUrl}?${params}`);
   if (!response.ok) console.log("error", response.status);
@@ -47,9 +48,7 @@ async function getAllPagesWithPagination() {
   let continueToken = null;
 
   do {
-    console.log(
-      `loading pages${continueToken ? ` ${continueToken.charAt(0)}` : ""}...`
-    );
+    console.log(`loading pages${continueToken ? ` ${continueToken.charAt(0)}` : ""}...`);
     const params = `action=query&list=allpages&aplimit=${maxPageSize}&format=json${
       continueToken ? `&apcontinue=${encodeURIComponent(continueToken)}` : ""
     }`;
@@ -68,22 +67,23 @@ async function getAllPagesWithPagination() {
 
 let allPages = await getAllPagesWithPagination();
 allPages = allPages.filter((page) => !page.startsWith("&"));
-allPages = allPages.filter((page) => page > "Pam");
 
 const worker = async () => {
-  let page;
-  while ((page = allPages.shift())) {
-    const { parse } = await getPageContent(page);
-    console.log(page);
-    if (parse.wikitext.includes("REDIRECT")) continue;
+  let pages;
+  while (true) {
+    pages = allPages.splice(0, 20);
+    if (pages.length == 0) break;
+    const { query } = await getPageContent(pages.join("|"));
+    for (const page of query.pages) {
+      for (const page of pages) console.log(page);
+      const name = page.title;
+      const content = page.revisions[0].content;
+      if (content.toLowerCase().includes("#redirect")) continue;
 
-    console.log(parse.text);
-    console.log("=".repeat(50));
-    await fs.writeFile(
-      "pages/" + page.replaceAll("/", "_"),
-      parse.text,
-      "utf8"
-    );
+      console.log(content);
+      console.log("=".repeat(50));
+      await fs.writeFile("pages/" + name.replaceAll("/", "_"), content, "utf8");
+    }
   }
 };
 
