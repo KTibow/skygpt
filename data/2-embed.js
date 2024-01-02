@@ -39,8 +39,8 @@ const clean = (text) => {
   text = text
     .replace(/\s+$/g, "")
     .replace(/\n{2,}/g, "\n\n")
-    .replace(/{{Image\|(?:[^\}]+\/)*([^\}]+)\|[0-9]+px(?:\|link=.+)?}}/g, `"$1"`)
-    .replace(/{{Item\/(.+)(?:|is=[0-9]+)?}}/g, "$1");
+    .replace(/{{Image\|(?:[^}]+\/)*([^}]+)\|[0-9]+px(?:\|link=[^}]+)?}}/g, `"$1"`)
+    .replace(/{{Item\/([^}]+)(?:|is=[0-9]+)?}}/g, "$1");
   if (text.indexOf("|summary") > 1500) {
     const summary = text.match(/^\|summary =([\s\S]+?)(\n\n\||\|body)/m);
     if (summary) {
