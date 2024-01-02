@@ -71,7 +71,7 @@ allPages = allPages.filter((page) => !page.startsWith("&"));
 const worker = async () => {
   let pages;
   while (true) {
-    pages = allPages.splice(0, 20);
+    pages = allPages.splice(0, 25);
     if (pages.length == 0) break;
     const { query } = await getPageContent(pages.join("|"));
     for (const page of query.pages) {
@@ -82,7 +82,7 @@ const worker = async () => {
 
       console.log(content);
       console.log("=".repeat(50));
-      await fs.writeFile("pages/" + name.replaceAll("/", "_"), content, "utf8");
+      await fs.writeFile("pages/" + name.replaceAll("/", "_SLASH_"), content, "utf8");
     }
   }
 };

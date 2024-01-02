@@ -83,7 +83,7 @@ const worker = async () => {
     }
 
     for (let i = 0; i < data.length; i++) {
-      const name = chunk[i][0];
+      const name = chunk[i][0].replaceAll("_SLASH_", "/");
       output[name] = data[i];
     }
     await fs.writeFile("embeddings.json", JSON.stringify(output), "utf8");
