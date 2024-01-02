@@ -37,8 +37,6 @@ export const onRequestPost: PagesFunction = async ({ request }) => {
 	const { pages }: { pages: string[] } = await request.json();
 	const query = await read(pages);
 	return Response.json(
-		Object.fromEntries(
-			query.pages.map((page: any) => [page.title, clean(page.revisions[0].content)]),
-		),
+		query.pages.map((page: any) => [page.title, clean(page.revisions[0].content)]),
 	);
 };

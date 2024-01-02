@@ -178,7 +178,7 @@
 						content:
 							`when answering the below question, use the following pages to help you.
 ` +
-							Object.entries(pages)
+							pages
 								.map(
 									([name, content], i) => `${name}: """${content.slice(0, i <= 1 ? 1000 : 500)}"""`,
 								)
