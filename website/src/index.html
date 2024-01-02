@@ -159,6 +159,7 @@
 					if (sResp.ok) break;
 					if (tries == 4) break;
 				}
+				const { documents } = await sResp.json();
 
 				assistantMessage.innerText = "reading the wiki...";
 				const pResp = await fetch("/read", {
@@ -167,7 +168,7 @@
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({
-						pages: await sResp.json(),
+						pages: documents,
 					}),
 				});
 				const pages = await pResp.json();

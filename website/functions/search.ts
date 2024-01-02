@@ -66,5 +66,5 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 	question = context ? await clarify(ai, context, question) : question;
 
 	const relevantDocuments = await search(ai, question);
-	return Response.json(relevantDocuments.slice(0, 3));
+	return Response.json({ question, documents: relevantDocuments.slice(0, 3) });
 };
