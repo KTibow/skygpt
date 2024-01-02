@@ -57,7 +57,10 @@ const clean = (text) => {
 
 const pagesFiles = await fs.readdir("pages");
 const pagesEntries = await Promise.all(
-  pagesFiles.map(async (page) => [page, await fs.readFile("pages/" + page, "utf8")])
+  pagesFiles.map(async (page) => [
+    page,
+    page + "\n\n" + (await fs.readFile("pages/" + page, "utf8")),
+  ])
 );
 const output = {};
 
