@@ -39,7 +39,14 @@ const clean = (text) => {
   text = text
     .replace(/\s+$/g, "")
     .replace(/\n{2,}/g, "\n\n")
-    .replace(/{{Image\|(?:[^\}]+\/)*([^\}]+)\|[0-9]+px(?:\|link=.+)?}}/g, `"$1"`);
+    .replace(/{{Image\|(?:[^\}]+\/)*([^\}]+)\|[0-9]+px(?:\|link=.+)?}}/g, `"$1"`)
+    .replace(/{{Item\/(.+)(?:|is=[0-9]+)?}}/g, "$1");
+  if (text.indexOf("|summary") > 1500) {
+    const summary = text.match(/^\|summary =([\s\S]+?)(\n\n\||\|body)/m);
+    if (summary) {
+      text = summary[1].trim() + "\n" + text.replace(summary[0], summary[2]);
+    }
+  }
   text = text.slice(0, 1500);
   const fractionSpecial = [...text].filter((c) => /[^a-zA-Z \n]/.test(c)).length / text.length;
   if (fractionSpecial > 0.1) {
