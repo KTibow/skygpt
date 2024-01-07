@@ -30,9 +30,9 @@ const clarify = async (ai: Ai, context: RoleScopedChatInput[], question: string)
 			{
 				role: "user",
 				content: `My next question is "${question}". I'm going to search for relevant info with an embedding database, so I need a search query for it.
-If I use any words like "it", "them", etc, you need to edit them to make it more explicit what it's referring to. This will help with searching for relevant info.
+If I use any words like "it", "them", etc, you need to edit them to make it more explicit what it's referring to. This will help with searching for relevant info. One example: if the question is "tell me more about the enchantment" and the context shows that they were asking about the scavenger enchantment, use the context to change it to something like "tell me more about the Scavenger enchantment".
 If not, just output the original question.
-When you output the query, do NOT output any other text, including extra words, formatting, or quotes. The only thing you say is the search query.`,
+When you output the query, do NOT output any other text, including extra words, formatting, or quotes. The ONLY thing you say is the search query.`,
 			},
 		],
 	});
