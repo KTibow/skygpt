@@ -42,7 +42,9 @@ When you output the query, do NOT output any other text, including extra words, 
 const search = async (ai: Ai, question: string) => {
 	const [dataR, embeddingsR] = await Promise.all([
 		ai.run("@cf/baai/bge-base-en-v1.5", { text: [question] }),
-		fetch("https://raw.githubusercontent.com/KTibow/skygpt/main/data/embeddings.json"),
+		fetch("https://raw.githubusercontent.com/KTibow/skygpt/main/data/embeddings.json", {
+			cf: { cacheTtl: 60 * 60 },
+		}),
 	]);
 	const embedding = dataR.data[0];
 	const embeddings: Record<string, number[]> = await embeddingsR.json();
