@@ -50,7 +50,7 @@ const clean = (text) => {
   text = text.slice(0, 1500);
   const fractionSpecial = [...text].filter((c) => /[^a-zA-Z \n]/.test(c)).length / text.length;
   if (fractionSpecial > 0.1) {
-    text = text.slice(0, 1500 - Math.min(1000, (fractionSpecial / 0.1) * 250));
+    text = text.slice(0, 1500 - Math.min(1000, fractionSpecial * 1500));
   }
   return text;
 };

@@ -9,9 +9,9 @@ const headers = {
 
 let lastRequest = 0;
 const patchedFetch = async (url, options = {}) => {
-  while (lastRequest + 500 > Date.now()) {
+  while (lastRequest + 400 > Date.now()) {
     await new Promise((resolve) => {
-      setTimeout(resolve, lastRequest + 500 - Date.now());
+      setTimeout(resolve, lastRequest + 400 - Date.now());
     });
   }
   lastRequest = Date.now();
@@ -75,7 +75,7 @@ const worker = async () => {
     if (pages.length == 0) break;
     const { query } = await getPageContent(pages.join("|"));
     for (const page of query.pages) {
-      for (const page of pages) console.log(page);
+      console.log(page.title);
       const name = page.title;
       const content = page.revisions[0].content;
       if (content.toLowerCase().includes("#redirect")) continue;
