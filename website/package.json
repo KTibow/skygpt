@@ -1,10 +1,10 @@
 {
 	"devDependencies": {
-		"@cloudflare/ai": "^1.0.47",
-		"@cloudflare/workers-types": "^4.20231218.0",
-		"prettier": "^3.1.1",
-		"typescript": "^5.3.3",
-		"wrangler": "^3.22.1"
+		"@cloudflare/ai": "^1.1.0",
+		"@cloudflare/workers-types": "^4.20240423.0",
+		"prettier": "^3.2.5",
+		"typescript": "^5.4.5",
+		"wrangler": "^3.52.0"
 	},
 	"scripts": {
 		"deploy": "wrangler pages deploy src",
