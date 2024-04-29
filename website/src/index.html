@@ -114,13 +114,7 @@
       const input = document.querySelector("input");
       const button = document.querySelector("button");
       const messages = document.querySelector(".messages");
-      const context = [
-        {
-          role: "system",
-          content:
-            "do NOT use your own knowledge of Hypixel Skyblock. instead, only use relevant data from the provided wiki pages.",
-        },
-      ];
+      const context = [];
       let messagesSent = 0;
 
       const sendMessage = async () => {
@@ -174,9 +168,13 @@
         const payload = [
           ...context,
           {
-            role: "system",
+            role: "user",
             content:
-              `when answering the below question, use the following pages to help you.
+              `i have a question "${question}", answer it.
+
+- since you're a hypixel skyblock chatbot, to help you, the system searched the hypixel skyblock wiki for the question, and found these pages.
+- is there a relevant page? if so, say which page, and consider quoting it. then, help based on the pages data. don't mention any irrelevant pages or your own knowledge.
+- is there no relevant page? say which pages are used and why they aren't relevant, and don't try to help with your own knowledge.
 ` +
               pages
                 .map(
@@ -184,10 +182,6 @@
                     `${name}: """${content.slice(0, i <= 1 ? 1000 : 500).replace(/\s+/g, " ")}"""`,
                 )
                 .join("\n\n"),
-          },
-          {
-            role: "user",
-            content: question,
           },
         ];
 
