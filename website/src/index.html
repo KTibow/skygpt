@@ -1,253 +1,252 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap"
-			rel="stylesheet"
-		/>
-		<style>
-			body {
-				color-scheme: dark;
-				font-family: Inter, Roboto, system-ui, sans-serif;
-				background-color: rgb(16 21 16);
-				color: rgb(223 228 220);
-				accent-color: rgb(152 213 164);
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        color-scheme: dark;
+        font-family: Inter, Roboto, system-ui, sans-serif;
+        background-color: rgb(16 21 16);
+        color: rgb(223 228 220);
+        accent-color: rgb(152 213 164);
 
-				display: flex;
-				flex-direction: column;
-				align-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-				margin: 0;
-				padding: 1rem;
-				height: 100dvh;
-			}
-			p {
-				margin: 0;
-			}
-			input,
-			button {
-				padding: 0;
-				background-color: transparent;
-				border: none;
-				font: inherit;
-			}
-			* {
-				box-sizing: border-box;
-			}
-			.column {
-				display: flex;
-				flex-direction: column;
-				gap: 1rem;
-				width: 100%;
-				height: 100%;
-				max-width: 40rem;
-			}
+        margin: 0;
+        padding: 1rem;
+        height: 100dvh;
+      }
+      p {
+        margin: 0;
+      }
+      input,
+      button {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        font: inherit;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      .column {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        height: 100%;
+        max-width: 40rem;
+      }
 
-			.messages {
-				display: flex;
-				flex-direction: column;
-				gap: 1rem;
-				overflow-y: auto;
-			}
-			.message.user {
-				background-color: rgb(152 213 164);
-				color: rgb(0 57 25);
-				border-radius: 0.75rem 0.75rem 0 0.75rem;
-				padding: 0.5rem;
-			}
-			.message.assistant {
-				padding: 0 0.5rem;
-			}
-			.input {
-				display: flex;
-				gap: 1rem;
-				margin-top: auto;
-			}
-			input {
-				background-color: rgb(24 29 24);
-				flex-grow: 1;
-				padding: 0 0.75rem;
-				border-radius: 0.25rem;
-			}
-			button {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: rgb(152 213 164);
+      .messages {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        overflow-y: auto;
+      }
+      .message.user {
+        background-color: rgb(152 213 164);
+        color: rgb(0 57 25);
+        border-radius: 0.75rem 0.75rem 0 0.75rem;
+        padding: 0.5rem;
+      }
+      .message.assistant {
+        padding: 0 0.5rem;
+      }
+      .input {
+        display: flex;
+        gap: 1rem;
+        margin-top: auto;
+      }
+      input {
+        background-color: rgb(24 29 24);
+        flex-grow: 1;
+        padding: 0 0.75rem;
+        border-radius: 0.25rem;
+      }
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgb(152 213 164);
 
-				width: 2.5rem;
-				height: 2.5rem;
-				border-radius: 2.5rem;
-				transition: all 0.2s;
-				cursor: pointer;
-			}
-			button:hover {
-				background-color: rgb(152 213 164 / 0.08);
-			}
-			button:focus-visible,
-			button:active {
-				background-color: rgb(152 213 164 / 0.12);
-			}
-		</style>
-		<title>SkyGPT</title>
-	</head>
-	<body>
-		<div class="column">
-			<div class="messages"></div>
-			<div class="input">
-				<input />
-				<button>
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-						<path
-							fill="currentColor"
-							d="M4.4 19.425q-.5.2-.95-.088T3 18.5V14l8-2l-8-2V5.5q0-.55.45-.837t.95-.088l15.4 6.5q.625.275.625.925t-.625.925z"
-						/>
-					</svg>
-				</button>
-			</div>
-		</div>
-		<script type="module">
-			const input = document.querySelector("input");
-			const button = document.querySelector("button");
-			const messages = document.querySelector(".messages");
-			const context = [
-				{
-					role: "system",
-					content:
-						"you're a really chill assistant that's helping the user with hypixel skyblock. since wiki data will be provided with every question, use it to help answer. avoid making stuff up and prioritize being helpful.",
-				},
-				{ role: "user", content: "hi!" },
-				{ role: "assistant", content: "hey, how can i help you today?" },
-			];
-			let messagesSent = 0;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 2.5rem;
+        transition: all 0.2s;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: rgb(152 213 164 / 0.08);
+      }
+      button:focus-visible,
+      button:active {
+        background-color: rgb(152 213 164 / 0.12);
+      }
+    </style>
+    <title>SkyGPT</title>
+  </head>
+  <body>
+    <div class="column">
+      <div class="messages"></div>
+      <div class="input">
+        <input />
+        <button>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path
+              fill="currentColor"
+              d="M4.4 19.425q-.5.2-.95-.088T3 18.5V14l8-2l-8-2V5.5q0-.55.45-.837t.95-.088l15.4 6.5q.625.275.625.925t-.625.925z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <script type="module">
+      const input = document.querySelector("input");
+      const button = document.querySelector("button");
+      const messages = document.querySelector(".messages");
+      const context = [
+        {
+          role: "system",
+          content:
+            "do NOT use your own knowledge of Hypixel Skyblock. instead, only use relevant data from the provided wiki pages.",
+        },
+      ];
+      let messagesSent = 0;
 
-			const sendMessage = async () => {
-				const question = input.value.trim();
-				if (!question) return;
+      const sendMessage = async () => {
+        const question = input.value.trim();
+        if (!question) return;
 
-				const userMessage = document.createElement("div");
-				const assistantMessage = document.createElement("div");
-				input.value = "";
+        const userMessage = document.createElement("div");
+        const assistantMessage = document.createElement("div");
+        input.value = "";
 
-				userMessage.classList.add("message");
-				userMessage.classList.add("user");
-				userMessage.innerText = question;
-				assistantMessage.classList.add("message");
-				assistantMessage.classList.add("assistant");
-				assistantMessage.innerText = "searching the wiki...";
-				messages.appendChild(userMessage);
-				messages.appendChild(assistantMessage);
+        userMessage.classList.add("message");
+        userMessage.classList.add("user");
+        userMessage.innerText = question;
+        assistantMessage.classList.add("message");
+        assistantMessage.classList.add("assistant");
+        assistantMessage.innerText = "searching the wiki...";
+        messages.appendChild(userMessage);
+        messages.appendChild(assistantMessage);
 
-				let sResp;
-				let tries = 0;
-				while (true) {
-					sResp = await fetch("/search", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({
-							question,
-							context: messagesSent > 0 ? context : undefined,
-						}),
-					});
-					tries++;
-					if (sResp.ok) break;
-					if (tries == 4) break;
-				}
-				const { documents } = await sResp.json();
+        let sResp;
+        let tries = 0;
+        while (true) {
+          sResp = await fetch("/search", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              question,
+              context: messagesSent > 0 ? context : undefined,
+            }),
+          });
+          tries++;
+          if (sResp.ok) break;
+          if (tries == 4) break;
+        }
+        const { documents } = await sResp.json();
 
-				assistantMessage.innerText = "reading the wiki...";
-				const pResp = await fetch("/read", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						pages: documents,
-					}),
-				});
-				const pages = await pResp.json();
+        assistantMessage.innerText = "reading the wiki...";
+        const pResp = await fetch("/read", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            pages: documents,
+          }),
+        });
+        const pages = await pResp.json();
 
-				const payload = [
-					...context,
-					{
-						role: "system",
-						content:
-							`when answering the below question, use the following pages to help you.
+        const payload = [
+          ...context,
+          {
+            role: "system",
+            content:
+              `when answering the below question, use the following pages to help you.
 ` +
-							pages
-								.map(
-									([name, content], i) => `${name}: """${content.slice(0, i <= 1 ? 1000 : 500)}"""`,
-								)
-								.join("\n\n"),
-					},
-					{
-						role: "user",
-						content: question,
-					},
-				];
+              pages
+                .map(
+                  ([name, content], i) =>
+                    `${name}: """${content.slice(0, i <= 1 ? 1000 : 500).replace(/\s+/g, " ")}"""`,
+                )
+                .join("\n\n"),
+          },
+          {
+            role: "user",
+            content: question,
+          },
+        ];
 
-				const generate = async () => {
-					assistantMessage.innerText = "okay.";
-					const mResp = await fetch("/chat", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({
-							messages: payload,
-						}),
-					});
-					if (!mResp.ok) {
-						const b = document.createElement("button");
-						b.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20q-3.35 0-5.675-2.325T4 12q0-3.35 2.325-5.675T12 4q1.725 0 3.3.712T18 6.75V5q0-.425.288-.712T19 4q.425 0 .713.288T20 5v5q0 .425-.288.713T19 11h-5q-.425 0-.712-.288T13 10q0-.425.288-.712T14 9h3.2q-.8-1.4-2.187-2.2T12 6Q9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.7 0 3.113-.862t2.187-2.313q.2-.35.563-.487t.737-.013q.4.125.575.525t-.025.75q-1.025 2-2.925 3.2T12 20"/></svg>`;
-						b.addEventListener("click", generate);
-						assistantMessage.innerHTML = "";
-						assistantMessage.appendChild(b);
-						return;
-					}
+        const generate = async () => {
+          assistantMessage.innerText = "okay.";
+          const mResp = await fetch("/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              messages: payload,
+            }),
+          });
+          if (!mResp.ok) {
+            const b = document.createElement("button");
+            b.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20q-3.35 0-5.675-2.325T4 12q0-3.35 2.325-5.675T12 4q1.725 0 3.3.712T18 6.75V5q0-.425.288-.712T19 4q.425 0 .713.288T20 5v5q0 .425-.288.713T19 11h-5q-.425 0-.712-.288T13 10q0-.425.288-.712T14 9h3.2q-.8-1.4-2.187-2.2T12 6Q9.5 6 7.75 7.75T6 12q0 2.5 1.75 4.25T12 18q1.7 0 3.113-.862t2.187-2.313q.2-.35.563-.487t.737-.013q.4.125.575.525t-.025.75q-1.025 2-2.925 3.2T12 20"/></svg>`;
+            b.addEventListener("click", generate);
+            assistantMessage.innerHTML = "";
+            assistantMessage.appendChild(b);
+            return;
+          }
 
-					const d = new TextDecoder("utf8");
-					const reader = mResp.body.getReader();
-					let acc = "";
-					while (true) {
-						const { value, done } = await reader.read();
-						if (done) break;
-						const decodedString = d.decode(value);
-						decodedString.split("\n").forEach((chunk) => {
-							try {
-								const payload = JSON.parse(chunk.slice(6));
-								const content = payload?.response;
-								if (content) {
-									acc += content;
-									assistantMessage.innerText = acc;
-								}
-							} catch {}
-						});
-					}
+          const d = new TextDecoder("utf8");
+          const reader = mResp.body.getReader();
+          let acc = "";
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) break;
+            const decodedString = d.decode(value);
+            decodedString.split("\n").forEach((chunk) => {
+              try {
+                const payload = JSON.parse(chunk.slice(6));
+                const content = payload?.response;
+                if (content) {
+                  acc += content;
+                  assistantMessage.innerText = acc;
+                }
+              } catch {}
+            });
+          }
 
-					context.push({
-						role: "user",
-						content: question,
-					});
-					context.push({
-						role: "system",
-						content: acc.trim(),
-					});
-					messagesSent++;
-				};
-				generate();
-			};
+          context.push({
+            role: "user",
+            content: question,
+          });
+          context.push({
+            role: "system",
+            content: acc.trim(),
+          });
+          messagesSent++;
+        };
+        generate();
+      };
 
-			input.addEventListener("keyup", (e) => {
-				if (e.key === "Enter") sendMessage();
-			});
-			button.addEventListener("click", sendMessage);
-		</script>
-	</body>
+      input.addEventListener("keyup", (e) => {
+        if (e.key === "Enter") sendMessage();
+      });
+      button.addEventListener("click", sendMessage);
+    </script>
+  </body>
 </html>

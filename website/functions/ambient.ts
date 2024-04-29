@@ -1,3 +1,3 @@
 export interface Env {
-	AI: any;
+  AI: any;
 }
