@@ -10,8 +10,8 @@ const clean = (text: string) => {
     .replace(/'''(.+?)'''/g, `$1`)
     .replace(/\[\[([^\]]+?)\|([^\]]+?)\]\]/g, `$2`)
     .replace(/\[\[(.+?)\]\]/g, `$1`)
-    .replace(/{{color\|[a-z]+\|(.+?)}}/g, `$1`)
-    .replace(/{{Motes\|(.+?)}}/g, `$1 Motes`)
+    .replace(/{{color\|[a-z]+\|(.+?)}}/gi, `$1`)
+    .replace(/{{motes\|(.+?)}}/gi, `$1 Motes`)
     .replace(/{{Image\|(?:[^}]+\/)*([^}]+)\|[0-9]+px(?:\|link=[^}]+)?}}/g, `"$1"`)
     .replace(/{{Item\/([^}]+)(?:|is=[0-9]+)?}}/g, "$1");
   if (text.indexOf("|summary") > 1000) {
