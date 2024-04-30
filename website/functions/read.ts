@@ -1,10 +1,20 @@
 const clean = (text: string) => {
   text = text
-    .replace(/\s+$/g, "")
-    .replace(/\n{2,}/g, "\n\n")
+    .replaceAll("<br>", "\n")
+    .replaceAll("{{Legendary}}", "Legendary")
+    .replaceAll("{{Uncommon}}", "Uncommon")
+    .replaceAll("{{Health}}", "Health")
+    .replaceAll("{{Defense}}", "Defense")
+    .replace(/\s+/g, " ")
+    .replace(/\s$/g, "")
+    .replace(/'''(.+?)'''/g, `$1`)
+    .replace(/\[\[([^\]]+?)\|([^\]]+?)\]\]/g, `$2`)
+    .replace(/\[\[(.+?)\]\]/g, `$1`)
+    .replace(/{{color\|[a-z]+\|(.+?)}}/g, `$1`)
+    .replace(/{{Motes\|(.+?)}}/g, `$1 Motes`)
     .replace(/{{Image\|(?:[^}]+\/)*([^}]+)\|[0-9]+px(?:\|link=[^}]+)?}}/g, `"$1"`)
     .replace(/{{Item\/([^}]+)(?:|is=[0-9]+)?}}/g, "$1");
-  if (text.indexOf("|summary") > 1500) {
+  if (text.indexOf("|summary") > 1200) {
     const summary = text.match(/^\|summary =([\s\S]+?)(\n\n\||\|body)/m);
     if (summary) {
       text = summary[1].trim() + "\n" + text.replace(summary[0], summary[2]);
