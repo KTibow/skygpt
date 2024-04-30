@@ -73,6 +73,9 @@
         padding: 0 0.75rem;
         border-radius: 0.25rem;
       }
+      a {
+        color: rgb(152 213 164);
+      }
       button {
         display: flex;
         align-items: center;
@@ -151,6 +154,7 @@
           if (sResp.ok) break;
           if (tries == 4) break;
         }
+        /** @type {{ documents: string[] }} */
         const { documents } = await sResp.json();
 
         assistantMessage.innerText = "reading the wiki...";
@@ -163,6 +167,7 @@
             pages: documents,
           }),
         });
+        /** @type {[string, string][]} */
         const pages = await pResp.json();
 
         const payload = [
@@ -173,7 +178,7 @@
               `i have a question "${question}", answer it.
 
 - since you're a hypixel skyblock chatbot, to help you, the system searched the hypixel skyblock wiki for the question, and found these pages.
-- is there a relevant page? if so, say which page, and consider quoting it. then, help based on the pages data. don't mention any irrelevant pages or your own knowledge.
+- is there a relevant page? if so, say which page, and consider quoting it. then, help based on the pages data. don't mention any irrelevant pages or your own knowledge; don't link articles, as the name will auto-turn into a link.
 - is there no relevant page? say which pages are used and why they aren't relevant, and don't try to help with your own knowledge.
 ` +
               pages
@@ -219,6 +224,12 @@
                 if (content) {
                   acc += content;
                   assistantMessage.innerText = acc;
+                  for (const page of documents) {
+                    assistantMessage.innerHTML = assistantMessage.innerHTML.replace(
+                      page,
+                      `<a href="https://wiki.hypixel.net/${page}" target="_blank">${page}</a>`,
+                    );
+                  }
                 }
               } catch {}
             });
