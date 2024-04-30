@@ -14,8 +14,10 @@ const clean = (text: string) => {
     .replace(/{{Motes\|(.+?)}}/g, `$1 Motes`)
     .replace(/{{Image\|(?:[^}]+\/)*([^}]+)\|[0-9]+px(?:\|link=[^}]+)?}}/g, `"$1"`)
     .replace(/{{Item\/([^}]+)(?:|is=[0-9]+)?}}/g, "$1");
-  if (text.indexOf("|summary") > 1200) {
-    const summary = text.match(/^\|summary =([\s\S]+?)(\n\n\||\|body)/m);
+  if (text.indexOf("|summary") > 1000) {
+    const summary = text.match(
+      /\|summary ?=([\s\S]+?) (\|dialogue|\|obtaining|\|purpose|\|variations)/m,
+    );
     if (summary) {
       text = summary[1].trim() + "\n" + text.replace(summary[0], summary[2]);
     }
